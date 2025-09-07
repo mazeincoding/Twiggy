@@ -161,8 +161,6 @@ alwaysApply: true
 {project_name}/
 {tree_content}
 ```
-
-**Dirs:** {structure['total_dirs']} | **Files:** {structure['total_files']} | **Updated:** {timestamp}
 """
         
         return rule_content
