@@ -18,3 +18,18 @@ twiggy watch   # start watching for changes
 Creates `.cursor/rules/file-structure.mdc` that auto-updates when you add/remove files.
 
 Ignores the usual stuff: `node_modules`, `__pycache__`, `.git`, `dist`, etc.
+
+## Design Decisions
+
+**Why track `twiggy.yml` but not the generated rule file?**
+
+**The Problem:** If we tracked the generated `.cursor/rules/file-structure.mdc` file, it would claim to be "updated in real-time" even when you're not running Twiggy. This creates a lying, stale file that misleads the AI about the current structure.
+
+**The Solution:**
+
+- Track `twiggy.yml` (config) - tells the team "this project uses Twiggy"
+- Don't track `.cursor/rules/file-structure.mdc` (generated output) - only exists when you're actively running the watcher
+- If you see the rule file, you know it's actually real-time and trustworthy for your session
+- If you don't see it, you haven't set up Twiggy yet (and the AI won't get false promises)
+
+This way the rule file is either accurate or doesn't exist - never stale.

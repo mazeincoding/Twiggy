@@ -150,18 +150,15 @@ class DirectoryScanner:
         
         count_types(structure['items'])
         
-        # Create the rule content
-        rule_content = f"""---
-alwaysApply: true
----
-
-# {project_name} Structure
-
-```
-{project_name}/
-{tree_content}
-```
-"""
+        # Load template and create rule content
+        template_path = Path(__file__).parent / 'templates' / 'file-structure.mdc.template'
+        with open(template_path, 'r') as f:
+            template = f.read()
+        
+        rule_content = template.format(
+            project_name=project_name,
+            tree_content=tree_content
+        )
         
         return rule_content
     

@@ -201,6 +201,9 @@ class Config:
             gitignore_patterns = self._load_gitignore()
             all_ignores.update(gitignore_patterns)
         
+        # Always ignore the generated cursor rule (not meant to be tracked)
+        all_ignores.add('.cursor/rules/file-structure.mdc')
+        
         return all_ignores
     
     def _load_gitignore(self) -> Set[str]:
