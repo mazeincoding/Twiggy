@@ -20,7 +20,7 @@ def init(config_only):
     """Initialize cursor context in the current directory"""
     current_dir = Path.cwd()
     
-    click.echo(f"{Fore.CYAN}🌿 Initializing Twiggy in: {current_dir}{Style.RESET_ALL}")
+    click.echo(f"{Fore.GREEN}🌿 Welcome to Twiggy! Initializing in: {current_dir}{Style.RESET_ALL}")
     
     # Create .cursor directory if it doesn't exist
     cursor_dir = current_dir / '.cursor'
@@ -38,7 +38,7 @@ def init(config_only):
         scanner = DirectoryScanner(config)
         scanner.scan_and_generate()
         
-        click.echo(f"{Fore.GREEN}✅ Initial directory structure generated!{Style.RESET_ALL}")
+        click.echo(f"{Fore.GREEN}✅ Directory structure generated!{Style.RESET_ALL}")
         
         # Ask if user wants to start watching
         if click.confirm(f"{Fore.CYAN}Start watching for changes?{Style.RESET_ALL}"):
