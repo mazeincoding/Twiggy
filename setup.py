@@ -10,6 +10,7 @@ setup(
         "click>=8.0.0",
         "watchdog>=3.0.0",
         "colorama>=0.4.0",
+        "pyyaml>=6.0",
     ],
     entry_points={
         "console_scripts": [

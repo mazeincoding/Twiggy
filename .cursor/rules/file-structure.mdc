@@ -1,0 +1,42 @@
+---
+alwaysApply: true
+---
+
+# project-directory-as-context-cursor Structure
+
+```
+project-directory-as-context-cursor/
+.cursor/
+└── rules/
+  └── file-structure.mdc
+cursor_context/
+├── templates/
+  └── twiggy.yml.template
+├── __init__.py
+├── cli.py
+├── config.py
+├── scanner.py
+└── watcher.py
+cursor_context.egg-info/
+├── dependency_links.txt
+├── entry_points.txt
+├── PKG-INFO
+├── requires.txt
+├── SOURCES.txt
+└── top_level.txt
+twiggy.egg-info/
+├── dependency_links.txt
+├── entry_points.txt
+├── PKG-INFO
+├── requires.txt
+├── SOURCES.txt
+└── top_level.txt
+LICENSE
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+twiggy.yml
+```
+
+**Dirs:** 6 | **Files:** 25 | **Updated:** 2025-09-08 00:48:50

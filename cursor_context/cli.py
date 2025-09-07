@@ -70,20 +70,18 @@ def scan():
 
 def setup_ignore_patterns(config):
     """Interactive setup for ignore patterns"""
-    click.echo(f"\n{Fore.YELLOW}📁 Setting up folder ignore patterns{Style.RESET_ALL}")
+    click.echo(f"\n{Fore.YELLOW}📁 Setting up ignore patterns{Style.RESET_ALL}")
     
-    # Show default ignores
-    default_ignores = config.get_default_ignores()
-    click.echo(f"\n{Fore.CYAN}Default ignores (will be included):{Style.RESET_ALL}")
-    for ignore in sorted(default_ignores):
-        click.echo(f"  • {ignore}")
-    
-    # Ask for custom ignores
+    # Ask for custom ignores with clear example
     custom_ignores = []
-    click.echo(f"\n{Fore.CYAN}Add custom folders to ignore (press Enter with empty input to finish):{Style.RESET_ALL}")
+    click.echo(f"\n{Fore.CYAN}Add custom folders to ignore (beyond the common defaults):{Style.RESET_ALL}")
+    click.echo(f"{Fore.YELLOW}Examples: 'temp', 'src/old-stuff', 'docs/legacy/backup'{Style.RESET_ALL}")
+    click.echo(f"{Fore.GREEN}Note: We'll ask about .gitignore sync next, so don't add those manually{Style.RESET_ALL}")
+    click.echo(f"{Fore.GREEN}You can skip this and edit twiggy.yml later{Style.RESET_ALL}")
+    click.echo(f"{Fore.YELLOW}Just press Enter when done{Style.RESET_ALL}")
     
     while True:
-        folder = click.prompt(f"{Fore.MAGENTA}Folder to ignore", default="", show_default=False).strip()
+        folder = click.prompt(f"{Fore.MAGENTA}Folder name", default="", show_default=False).strip()
         if not folder:
             break
         if folder not in custom_ignores:
@@ -92,11 +90,15 @@ def setup_ignore_patterns(config):
         else:
             click.echo(f"  {Fore.YELLOW}⚠ Already added: {folder}{Style.RESET_ALL}")
     
-    # Save config
-    all_ignores = list(default_ignores) + custom_ignores
-    config.save_ignores(all_ignores)
+    # Ask about gitignore sync
+    click.echo(f"\n{Fore.CYAN}Sync with .gitignore - automatically ignore anything in your .gitignore{Style.RESET_ALL}")
+    click.echo(f"{Fore.GREEN}This keeps your ignore list in sync (you can change this later){Style.RESET_ALL}")
+    sync_gitignore = click.confirm(f"{Fore.CYAN}Enable .gitignore sync?{Style.RESET_ALL}", default=True)
     
-    click.echo(f"\n{Fore.GREEN}✅ Ignore patterns saved!{Style.RESET_ALL}")
+    # Create config file
+    config.create_default_config(custom_ignores, sync_gitignore)
+    
+    click.echo(f"\n{Fore.GREEN}✅ Created twiggy.yml - you can edit this file later!{Style.RESET_ALL}")
     if custom_ignores:
         click.echo(f"{Fore.CYAN}Custom ignores added:{Style.RESET_ALL}")
         for ignore in custom_ignores:

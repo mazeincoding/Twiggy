@@ -2,3 +2,4 @@ include README.md
 include requirements.txt
 include LICENSE
 recursive-include cursor_context *.py
+recursive-include cursor_context/templates *.template

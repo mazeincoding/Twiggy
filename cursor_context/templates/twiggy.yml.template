@@ -1,0 +1,13 @@
+# Twiggy Configuration
+# Controls what folders and files Twiggy ignores when generating directory structure
+
+# Custom folders/files to ignore (add your own here)
+# You can use folder names or full paths:
+#   - temp                    # ignores any folder named "temp"
+#   - src/old-stuff          # ignores only "old-stuff" inside "src"
+#   - docs/legacy/backup     # ignores specific deep path
+ignore:
+{ignore_list}
+
+# Sync with .gitignore - automatically ignore anything in your .gitignore
+syncWithGitignore: {sync_gitignore}
