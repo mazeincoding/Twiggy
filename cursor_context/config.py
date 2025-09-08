@@ -19,7 +19,7 @@ class Config:
             'logs', 'log', 'tmp', 'temp', '.tmp', '.temp', '_site', '.docusaurus', 'public', 'docs/_build',
             'ios/build', 'android/build', '.expo', '*.db', '*.sqlite', '*.sqlite3', '.docker', '.terraform',
             '.serverless', '.yarn', '.pnpm-store', '.rush', '.playwright', 'cypress/videos', 'cypress/screenshots',
-            'test-results', '.sass-cache', '.postcssrc', '.eslintcache', '.stylelintcache'
+            'test-results', '.sass-cache', '.postcssrc', '.eslintcache', '.stylelintcache', '.github', '.husky'
         }
     
     def exists(self) -> bool:
