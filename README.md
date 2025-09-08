@@ -33,8 +33,9 @@ pip install -e .
 ## Use
 
 ```bash
-twiggy init    # setup in any project
-twiggy watch   # start watching for changes
+twiggy init              # setup in any project (interactive)
+twiggy init --defaults   # setup with defaults (no questions)
+twiggy watch             # start watching for changes
 ```
 
 Creates `.cursor/rules/file-structure.mdc` that auto-updates when you add/remove files.

@@ -19,3 +19,8 @@ ignore:
 
 # Sync with .gitignore - automatically ignore anything in your .gitignore
 syncWithGitignore: true
+
+# Output format for directory structure
+# tree: visual tree (├── └──)
+# xml: XML structure (better for LLMs)
+format: xml

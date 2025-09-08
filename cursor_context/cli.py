@@ -4,6 +4,7 @@ from .scanner import DirectoryScanner
 from .watcher import FileWatcher
 from .config import Config
 from .gitignore import ensure_gitignore_entry
+from .defaults import DEFAULT_SYNC_GITIGNORE, DEFAULT_FORMAT, DEFAULT_CUSTOM_IGNORES
 from colorama import init, Fore, Style
 
 init()
@@ -15,7 +16,8 @@ def main():
 
 @main.command()
 @click.option('--config-only', is_flag=True, help='Only create config without scanning')
-def init(config_only):
+@click.option('--defaults', is_flag=True, help='Use default settings without prompts')
+def init(config_only, defaults):
     """Initialize Twiggy in the current directory"""
     current_dir = Path.cwd()
     
@@ -27,7 +29,10 @@ def init(config_only):
     config = Config(current_dir)
     
     if not config.exists() or click.confirm(f"{Fore.YELLOW}Config already exists. Reconfigure?{Style.RESET_ALL}"):
-        _configure_ignore_patterns(config)
+        if defaults:
+            _create_default_config(config)
+        else:
+            _configure_ignore_patterns(config)
     
     if config_only:
         click.echo(f"{Fore.GREEN}✅ Configuration saved! Run 'twiggy watch' to start monitoring.{Style.RESET_ALL}")
@@ -126,6 +131,11 @@ def _ask_output_format():
     click.echo(f"{Fore.YELLOW}xml: XML structure (better for LLMs){Style.RESET_ALL}")
     click.echo(f"{Fore.YELLOW}tree: Visual tree with ├── └── (human-readable){Style.RESET_ALL}")
     return click.prompt(f"{Fore.CYAN}Choose format", type=click.Choice(['xml', 'tree']), default='xml')
+
+
+def _create_default_config(config):
+    config.create_default_config(DEFAULT_CUSTOM_IGNORES, DEFAULT_SYNC_GITIGNORE, DEFAULT_FORMAT)
+    click.echo(f"\n{Fore.GREEN}✅ Created twiggy.yml with defaults - you can edit this file later!{Style.RESET_ALL}")
 
 
 def _display_added_ignores(custom_ignores):
