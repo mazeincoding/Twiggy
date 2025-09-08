@@ -92,8 +92,15 @@ class DirectoryScanner:
     
     def generate_cursor_rule(self, structure: Dict) -> str:
         project_name = self.project_root.name
-        tree_lines = self.generate_tree_structure(structure['items'])
-        tree_content = "\n".join(tree_lines)
+        
+        config = self.config.load()
+        format_type = config.get('format', 'xml')
+        
+        if format_type == 'xml':
+            tree_content = self.generate_xml_structure(structure['items'])
+        else:
+            tree_lines = self.generate_tree_structure(structure['items'])
+            tree_content = "\n".join(tree_lines)
         
         template_path = Path(__file__).parent / 'templates' / 'file-structure.mdc.template'
         with open(template_path, 'r') as f:
@@ -103,6 +110,22 @@ class DirectoryScanner:
             project_name=project_name,
             tree_content=tree_content
         )
+    
+    def generate_xml_structure(self, items: List[Dict], level: int = 0) -> str:
+        lines = []
+        indent = "  " * level
+        
+        for item in items:
+            if item['type'] == 'directory':
+                lines.append(f"{indent}<directory name=\"{item['name']}\">")
+                if item.get('children'):
+                    child_content = self.generate_xml_structure(item['children'], level + 1)
+                    lines.append(child_content)
+                lines.append(f"{indent}</directory>")
+            else:
+                lines.append(f"{indent}<file name=\"{item['name']}\"/>")
+        
+        return '\n'.join(lines)
     
     def scan_and_generate(self):
         self.output_file.parent.mkdir(parents=True, exist_ok=True)

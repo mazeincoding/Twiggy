@@ -25,7 +25,7 @@ class Config:
     def exists(self) -> bool:
         return self.config_file.exists()
     
-    def create_default_config(self, custom_ignores: List[str] = None, sync_gitignore: bool = True):
+    def create_default_config(self, custom_ignores: List[str] = None, sync_gitignore: bool = True, format_type: str = 'xml'):
         custom_ignores = custom_ignores or []
         
         template_path = Path(__file__).parent / 'templates' / 'twiggy.yml.template'
@@ -34,7 +34,8 @@ class Config:
         
         config_content = template.format(
             ignore_list=self._format_ignore_list(custom_ignores),
-            sync_gitignore=str(sync_gitignore).lower()
+            sync_gitignore=str(sync_gitignore).lower(),
+            format=format_type
         )
         
         with open(self.config_file, 'w') as f:
@@ -56,7 +57,8 @@ class Config:
             
             return {
                 'ignores': config.get('ignore', []),
-                'syncWithGitignore': config.get('syncWithGitignore', True)
+                'syncWithGitignore': config.get('syncWithGitignore', True),
+                'format': config.get('format', 'xml')
             }
         except Exception:
             return {}

@@ -83,8 +83,9 @@ def _configure_ignore_patterns(config):
     
     custom_ignores = _collect_custom_ignores()
     sync_gitignore = _ask_gitignore_sync()
+    format_type = _ask_output_format()
     
-    config.create_default_config(custom_ignores, sync_gitignore)
+    config.create_default_config(custom_ignores, sync_gitignore, format_type)
     
     click.echo(f"\n{Fore.GREEN}✅ Created twiggy.yml - you can edit this file later!{Style.RESET_ALL}")
     if custom_ignores:
@@ -118,6 +119,13 @@ def _ask_gitignore_sync():
     click.echo(f"\n{Fore.CYAN}Sync with .gitignore - automatically ignore anything in your .gitignore{Style.RESET_ALL}")
     click.echo(f"{Fore.GREEN}This keeps your ignore list in sync (you can change this later){Style.RESET_ALL}")
     return click.confirm(f"{Fore.CYAN}Enable .gitignore sync?{Style.RESET_ALL}", default=True)
+
+
+def _ask_output_format():
+    click.echo(f"\n{Fore.CYAN}Output format for directory structure:{Style.RESET_ALL}")
+    click.echo(f"{Fore.YELLOW}xml: XML structure (better for LLMs){Style.RESET_ALL}")
+    click.echo(f"{Fore.YELLOW}tree: Visual tree with ├── └── (human-readable){Style.RESET_ALL}")
+    return click.prompt(f"{Fore.CYAN}Choose format", type=click.Choice(['xml', 'tree']), default='xml')
 
 
 def _display_added_ignores(custom_ignores):
