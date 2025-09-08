@@ -2,6 +2,28 @@
 
 Real-time directory structure for Cursor AI. Your AI always knows your codebase's structure.
 
+## Why This Exists
+
+The AI in Cursor only gets a high-level overview of your project:
+
+```
+apps/
+  web/
+    src/
+      app/
+      hooks/
+      constants/
+```
+
+The AI can't see individual files, subdirectories, or what's actually inside those folders. It knows you have a `hooks/` directory but not what hooks exist.
+
+Twiggy fixes this by generating a detailed, real-time directory tree that shows every file and folder. Now the AI can see:
+
+- All your individual hook files
+- Nested directory structures
+- Every component, utility, and config file
+- The complete picture of your codebase
+
 ## Install
 
 ```bash
