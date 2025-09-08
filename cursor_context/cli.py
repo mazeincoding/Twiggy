@@ -27,6 +27,20 @@ def init(config_only):
     rules_dir = cursor_dir / 'rules'
     rules_dir.mkdir(parents=True, exist_ok=True)
     
+    # Add rule file to .gitignore if not already there
+    gitignore_path = current_dir / '.gitignore'
+    gitignore_entry = '.cursor/rules/file-structure.mdc'
+    
+    if gitignore_path.exists():
+        with open(gitignore_path, 'r') as f:
+            gitignore_content = f.read()
+        if gitignore_entry not in gitignore_content:
+            with open(gitignore_path, 'a') as f:
+                f.write(f'\n# Twiggy\n{gitignore_entry}\n')
+    else:
+        with open(gitignore_path, 'w') as f:
+            f.write(f'# Twiggy\n{gitignore_entry}\n')
+    
     # Initialize config
     config = Config(current_dir)
     

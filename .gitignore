@@ -52,3 +52,6 @@ htmlcov/
 # Misc
 *.log
 .cache/
+
+# Twiggy
+.cursor/rules/file-structure.mdc

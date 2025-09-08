@@ -5,6 +5,7 @@
 # https://github.com/twiggy-tools/Twiggy
 #
 # This file controls what folders and files Twiggy ignores when generating directory structure
+# Note: The generated .cursor/rules/file-structure.mdc is not tracked in git by design
 
 # Custom folders/files to ignore (add your own here)
 # You can use folder names or full paths:
