@@ -1,1 +1,1 @@
-# Cursor Context CLI Tool
+"""Twiggy - Real-time directory structure for Cursor AI"""
