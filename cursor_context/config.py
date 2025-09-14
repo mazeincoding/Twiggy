@@ -2,6 +2,7 @@ import yaml
 import os
 from pathlib import Path
 from typing import List, Set
+from importlib import resources
 
 class Config:
     def __init__(self, project_root: Path):
@@ -28,9 +29,23 @@ class Config:
     def create_default_config(self, custom_ignores: List[str] = None, sync_gitignore: bool = True, format_type: str = 'xml'):
         custom_ignores = custom_ignores or []
         
-        template_path = Path(__file__).parent / 'templates' / 'twiggy.yml.template'
-        with open(template_path, 'r') as f:
-            template = f.read()
+        # Load template from package resources; provide a minimal fallback if missing
+        try:
+            template = resources.files('cursor_context').joinpath('templates/twiggy.yml.template').read_text(encoding='utf-8')
+        except FileNotFoundError:
+            template = (
+                "# Twiggy Configuration\n"
+                "# \n"
+                "# Twiggy generates real-time directory structure for Cursor AI\n"
+                "# Your AI always knows your codebase's structure automatically\n"
+                "# https://github.com/twiggy-tools/Twiggy\n\n"
+                "# Custom folders/files to ignore (add your own here)\n"
+                "ignore:\n{ignore_list}\n\n"
+                "# Sync with .gitignore - automatically ignore anything in your .gitignore\n"
+                "syncWithGitignore: {sync_gitignore}\n\n"
+                "# Output format for directory structure\n"
+                "format: {format}\n"
+            )
         
         config_content = template.format(
             ignore_list=self._format_ignore_list(custom_ignores),

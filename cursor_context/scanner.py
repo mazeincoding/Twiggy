@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Dict, List
 from .config import Config
+from importlib import resources
 
 class DirectoryScanner:
     def __init__(self, config: Config):
@@ -102,9 +103,15 @@ class DirectoryScanner:
             tree_lines = self.generate_tree_structure(structure['items'])
             tree_content = "\n".join(tree_lines)
         
-        template_path = Path(__file__).parent / 'templates' / 'file-structure.mdc.template'
-        with open(template_path, 'r') as f:
-            template = f.read()
+        # Load template from package resources; fallback to a minimal template if missing
+        try:
+            template = resources.files('cursor_context').joinpath('templates/file-structure.mdc.template').read_text(encoding='utf-8')
+        except FileNotFoundError:
+            template = (
+                "---\nalwaysApply: true\n---\n\n"
+                f"# {project_name} Structure\n\n"
+                "```\n{project_name}/\n{tree_content}\n```\n"
+            )
         
         return template.format(
             project_name=project_name,

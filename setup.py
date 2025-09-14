@@ -6,6 +6,13 @@ setup(
     description="CLI tool to generate real-time directory structure for Cursor AI",
     author="Maze",
     packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        "cursor_context": [
+            "templates/*.template",
+            "templates/*.mdc.template",
+        ]
+    },
     install_requires=[
         "click>=8.0.0",
         "watchdog>=3.0.0",
