@@ -29,7 +29,6 @@ class Config:
     def create_default_config(self, custom_ignores: List[str] = None, sync_gitignore: bool = True, format_type: str = 'xml'):
         custom_ignores = custom_ignores or []
         
-        # Load template from package resources; provide a minimal fallback if missing
         try:
             template = resources.files('cursor_context').joinpath('templates/twiggy.yml.template').read_text(encoding='utf-8')
         except FileNotFoundError:

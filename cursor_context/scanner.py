@@ -103,7 +103,6 @@ class DirectoryScanner:
             tree_lines = self.generate_tree_structure(structure['items'])
             tree_content = "\n".join(tree_lines)
         
-        # Load template from package resources; fallback to a minimal template if missing
         try:
             template = resources.files('cursor_context').joinpath('templates/file-structure.mdc.template').read_text(encoding='utf-8')
         except FileNotFoundError:
