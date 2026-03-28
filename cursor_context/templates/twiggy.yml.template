@@ -36,3 +36,8 @@ indexing:
   # Add your own patterns here:
   exclude:
 {indexing_exclude}
+
+  # Output detail level:
+  # 'full' = full signatures and members
+  # 'compact' = names with collapsed details, like export function foo(...) or export interface Bar { ... }
+  detailLevel: {indexing_detail_level}
